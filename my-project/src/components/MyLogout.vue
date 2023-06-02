@@ -9,7 +9,7 @@
   import { useSupabase } from '@supabase/supabase-js'
   
   export default {
-    name: 'Logout',
+    name: 'MyLogout',
     setup() {
       const supabase = useSupabase()
   

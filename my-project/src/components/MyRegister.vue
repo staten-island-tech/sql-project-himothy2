@@ -1,56 +1,46 @@
 <template>
-    <div>
-      <h2>Register</h2>
-      <form @submit.prevent="register">
-        <div>
-          <label for="email">Email:</label>
-          <input type="email" id="email" v-model="email" required>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required>
-        </div>
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import { ref } from 'vue'
-  import { useSupabase } from '@supabase/supabase-js'
-  
-  export default {
-    name: 'Register',
-    setup() {
-      const email = ref('')
-      const password = ref('')
-      const supabase = useSupabase()
-  
-      const register = async () => {
-        try {
-          const { user, error } = await supabase.auth.signUp({
-            email: email.value,
-            password: password.value
-          })
-  
-          if (error) {
-            console.error(error.message)
-            return
-          }
-  
-          console.log('Registration successful')
-          // Redirect or perform any other actions after successful registration
-        } catch (error) {
+  <div>
+    <h2>Register</h2>
+    <!-- Your registration form code here -->
+    <button @click="register">Register</button>
+  </div>
+</template>
+
+<script>
+import { onMounted } from 'vue'
+import { useSupabase } from '@supabase/supabase-js'
+
+export default {
+  name: 'MyRegister',
+  setup() {
+    const supabase = useSupabase()
+
+    const register = async () => {
+      try {
+        const { user, error } = await supabase.auth.signUp({
+          email: 'example@example.com',
+          password: 'password'
+        })
+
+        if (error) {
           console.error(error.message)
+          return
         }
-      }
-  
-      return {
-        email,
-        password,
-        register
+
+        console.log('User registered:', user)
+        // Redirect or perform any other actions after successful registration
+      } catch (error) {
+        console.error(error.message)
       }
     }
+
+    onMounted(() => {
+      // Any initialization or setup code
+    })
+
+    return {
+      register
+    }
   }
-  </script>
-  
+}
+</script>
